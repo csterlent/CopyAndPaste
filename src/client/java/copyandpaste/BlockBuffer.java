@@ -45,6 +45,7 @@ class BlockBuffer {
       data[i] = world.getBlockMetadata(ix, iy, iz);
       // System.out.println("Get: " + ix + " " + iy + " " + iz);
       // System.out.println(this.ids[i]);
+      System.out.println("GET " + this.ids[i] + ":" + this.data[i]);
     }
   }
 
@@ -62,6 +63,7 @@ class BlockBuffer {
 
   public void put(int x, int y, int z) {
     World world = Minecraft.theMinecraft.theWorld;
+    world.multiplayerWorld = true;
     if (this.bx) x += 1-this.sx;
     if (this.by) y += 1-this.sy;
     if (this.bz) z += 1-this.sz;
@@ -71,8 +73,9 @@ class BlockBuffer {
       int iz = z + i%this.sz;
       world.setBlockAndMetadata(ix, iy, iz, this.ids[i], this.data[i]);
       // System.out.println("Put: " + ix + " " + iy + " " + iz);
-      // System.out.println(this.ids[i]);
+      System.out.println("PUT " + this.ids[i] + ":" + this.data[i]);
     }
+    world.multiplayerWorld = false;
   }
 
   public void fill(int tx, int ty, int tz, int x, int y, int z, int bid, int metadata) {
